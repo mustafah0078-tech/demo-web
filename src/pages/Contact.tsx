@@ -1,9 +1,9 @@
 import { motion } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
-import { Phone, MapPin, Clock, MessageSquare, Map } from 'lucide-react';
+import { Phone, MapPin, Clock, MessageSquare, Map, Mail } from 'lucide-react';
 
 export default function Contact() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   return (
     <div className="pt-32 pb-24 w-full">
@@ -58,10 +58,23 @@ export default function Contact() {
                   <a href={`tel:${t('contact.phone').replace(/\s/g, '')}`} className="inline-flex items-center gap-2 text-[11px] text-sargon-gold hover:text-white uppercase tracking-[0.2em] transition-colors font-sans">
                     <Phone size={16} /> {t('contact.call')}
                   </a>
-                  <a href="#" className="inline-flex items-center gap-2 text-[11px] text-sargon-gold hover:text-white uppercase tracking-[0.2em] transition-colors font-sans">
+                  <a href={`https://wa.me/${t('contact.phone').replace(/\+| /g, '')}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-[11px] text-sargon-gold hover:text-white uppercase tracking-[0.2em] transition-colors font-sans">
                     <MessageSquare size={16} /> {t('contact.whatsapp')}
                   </a>
                 </div>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-6">
+              <div className="w-14 h-14 shrink-0 rounded-full border border-sargon-gold/30 flex items-center justify-center text-sargon-gold">
+                <Mail size={24} />
+              </div>
+              <div>
+                <h3 className="text-xl font-heading text-sargon-white mb-2 uppercase tracking-widest">{language === 'en' ? 'Email' : 'البريد الإلكتروني'}</h3>
+                <p className="text-sargon-white/60 font-sans text-sm font-light leading-relaxed">{t('contact.email')}</p>
+                <a href={`mailto:${t('contact.email')}`} className="inline-flex items-center gap-2 mt-4 text-[11px] text-sargon-gold hover:text-white uppercase tracking-[0.2em] transition-colors font-sans">
+                  <Mail size={16} /> {language === 'en' ? 'Send Email' : 'إرسال بريد إلكتروني'}
+                </a>
               </div>
             </div>
 

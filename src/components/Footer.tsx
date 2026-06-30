@@ -1,6 +1,6 @@
 import { useLanguage } from '../context/LanguageContext';
 import { NavLink } from 'react-router-dom';
-import { Instagram, Facebook, MapPin, Phone, Clock } from 'lucide-react';
+import { Instagram, Facebook, MapPin, Phone, Clock, Mail } from 'lucide-react';
 
 export function Footer() {
   const { t } = useLanguage();
@@ -50,6 +50,10 @@ export function Footer() {
             <div className="flex items-center gap-3">
               <Phone size={18} className="text-sargon-gold shrink-0" />
               <p className="text-sargon-gray text-sm">{t('contact.phone')}</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <Mail size={18} className="text-sargon-gold shrink-0" />
+              <p className="text-sargon-gray text-sm">{t('contact.email')}</p>
             </div>
           </div>
 
