@@ -62,7 +62,7 @@ export default function OurStory() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <img src="https://images.unsplash.com/photo-1542314831-c6a4d27d66f6?q=80&w=2070&auto=format&fit=crop" alt="Spices" className="w-full h-[500px] object-cover rounded-sm" loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1528699633788-424224dc89b5?q=80&w=2070&auto=format&fit=crop" alt="Spices" className="w-full h-[500px] object-cover rounded-sm" loading="lazy" />
         </motion.div>
       </div>
     </div>

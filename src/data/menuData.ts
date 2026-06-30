@@ -73,7 +73,7 @@ export const menuItems: MenuItem[] = [
   {
     id: 'hummus-sargon',
     categoryId: 'cold-appetizers',
-    image: 'https://images.unsplash.com/photo-1577905886361-1279efb50720?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1577906096429-f73c2c312435?auto=format&fit=crop&q=80&w=800',
     price: 38,
     tags: ['vegetarian'],
     name: { en: 'AURUM Signature Hummus', ar: 'حمص أوروم المميز' },
@@ -93,7 +93,7 @@ export const menuItems: MenuItem[] = [
   {
     id: 'batata-harra',
     categoryId: 'hot-appetizers',
-    image: 'https://images.unsplash.com/photo-1588137330759-9988225585d9?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1505253758473-96b7015fcd40?auto=format&fit=crop&q=80&w=800',
     price: 35,
     tags: ['vegetarian'],
     name: { en: 'Batata Harra', ar: 'بطاطا حرة' },
@@ -134,7 +134,7 @@ export const menuItems: MenuItem[] = [
   {
     id: 'lamb-chops',
     categoryId: 'charcoal-grills',
-    image: 'https://images.unsplash.com/photo-1514516872583-04e760c384bf?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=800',
     price: 140,
     tags: ['grills', 'lamb'],
     isSignature: true,
@@ -168,7 +168,7 @@ export const menuItems: MenuItem[] = [
   {
     id: 'cheese-pide',
     categoryId: 'pide',
-    image: 'https://images.unsplash.com/photo-1594998964585-8bf8c874f664?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&q=80&w=800',
     price: 55,
     tags: ['vegetarian', 'oven'],
     name: { en: 'Cheese Pide', ar: 'بيدا بالجبنة' },
@@ -179,7 +179,7 @@ export const menuItems: MenuItem[] = [
   {
     id: 'zaatar-manaqish',
     categoryId: 'manaqish',
-    image: 'https://images.unsplash.com/photo-1588137330759-9988225585d9?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1505253758473-96b7015fcd40?auto=format&fit=crop&q=80&w=800',
     price: 25,
     tags: ['vegetarian', 'oven'],
     name: { en: 'Zaatar Manaqish', ar: 'منقوشة زعتر' },
@@ -201,7 +201,7 @@ export const menuItems: MenuItem[] = [
   {
     id: 'sargon-truffle-hummus',
     categoryId: 'sargon-new',
-    image: 'https://images.unsplash.com/photo-1577905886361-1279efb50720?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1577906096429-f73c2c312435?auto=format&fit=crop&q=80&w=800',
     price: 50,
     tags: ['vegetarian'],
     name: { en: 'Truffle Hummus', ar: 'حمص بالكمأة' },
