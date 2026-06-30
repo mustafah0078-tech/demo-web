@@ -37,35 +37,71 @@ export default function Menu() {
     }
   }, [categoriesWithItems]);
 
+  // Intersection Observer for Active Category
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 200; // offset for sticky header
-
-      let currentActive = '';
-      for (const cat of categoriesWithItems) {
-        const element = categoryRefs.current[cat.id];
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            currentActive = cat.id;
-            break;
-          }
-        }
-      }
-      
-      if (currentActive && currentActive !== activeCategoryScroll) {
-        setActiveCategoryScroll(currentActive);
-      }
+    const observerOptions = {
+      root: null,
+      rootMargin: '-120px 0px -70% 0px',
+      threshold: 0
     };
 
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveCategoryScroll(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    categoriesWithItems.forEach((cat) => {
+      const el = categoryRefs.current[cat.id];
+      if (el) {
+        observer.observe(el);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, [categoriesWithItems]);
+
+  const navContainerRef = useRef<HTMLDivElement>(null);
+
+  // Scroll active category into view in the navigation bar
+  useEffect(() => {
+    if (navContainerRef.current && activeCategoryScroll) {
+      const activeButton = navContainerRef.current.querySelector(`[data-category="${activeCategoryScroll}"]`) as HTMLElement;
+      if (activeButton) {
+        const containerWidth = navContainerRef.current.clientWidth;
+        const buttonLeft = activeButton.offsetLeft;
+        const buttonWidth = activeButton.clientWidth;
+        
+        navContainerRef.current.scrollTo({
+          left: buttonLeft - containerWidth / 2 + buttonWidth / 2,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, [activeCategoryScroll]);
+
+  const [isNavSticky, setIsNavSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 350) {
+        setIsNavSticky(true);
+      } else {
+        setIsNavSticky(false);
+      }
+    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [categoriesWithItems, activeCategoryScroll]);
+  }, []);
 
   const scrollToCategory = (categoryId: string) => {
     const element = categoryRefs.current[categoryId];
     if (element) {
-      const y = element.getBoundingClientRect().top + window.scrollY - 150;
+      const y = element.getBoundingClientRect().top + window.scrollY - 160;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
@@ -126,48 +162,46 @@ export default function Menu() {
         </motion.div>
       </div>
 
-      <div className="w-full max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-4 gap-12 relative">
-        {/* Sticky Category Navigation */}
-        <div className="hidden lg:block lg:col-span-1">
-          <div className="sticky top-32 flex flex-col gap-2">
-            {categoriesWithItems.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => scrollToCategory(cat.id)}
-                className={`text-left px-4 py-3 border-l-2 transition-all duration-300 font-heading text-xl tracking-wide ${
-                  activeCategoryScroll === cat.id 
-                    ? 'border-sargon-gold text-sargon-gold' 
-                    : 'border-white/10 text-sargon-gray hover:text-sargon-white hover:border-white/30'
-                }`}
-                dir={dir}
-              >
-                {cat.name[language]}
-              </button>
-            ))}
+      <div className="w-full relative">
+        {/* Unified Category Navigation Bar */}
+        <div className={`sticky top-[80px] z-40 w-full transition-all duration-500 mb-12 ${
+          isNavSticky 
+            ? 'bg-[#0D0D0D]/85 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.7)] border-b border-white/10 py-4' 
+            : 'bg-transparent py-2 border-b border-transparent'
+        }`}>
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div 
+              ref={navContainerRef}
+              className="flex gap-2 md:gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-2 -mb-2"
+            >
+              {categoriesWithItems.map((cat) => (
+                <button
+                  key={cat.id}
+                  data-category={cat.id}
+                  onClick={() => scrollToCategory(cat.id)}
+                  className={`relative whitespace-nowrap px-5 py-2.5 transition-colors duration-300 font-heading text-lg tracking-wide rounded-full ${
+                    activeCategoryScroll === cat.id 
+                      ? 'text-sargon-black' 
+                      : 'text-sargon-gray hover:text-sargon-white'
+                  }`}
+                >
+                  {activeCategoryScroll === cat.id && (
+                    <motion.div 
+                      layoutId="activeCategory"
+                      className="absolute inset-0 bg-sargon-gold rounded-full"
+                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10">{cat.name[language]}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Mobile Category Navigation (Horizontal scroll) */}
-        <div className="lg:hidden w-full overflow-x-auto scrollbar-hide sticky top-20 z-40 bg-sargon-black/90 backdrop-blur-md py-4 border-b border-white/10 -mx-6 px-6 mb-8">
-          <div className="flex gap-6">
-            {categoriesWithItems.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => scrollToCategory(cat.id)}
-                className={`whitespace-nowrap transition-colors font-heading text-lg tracking-wide ${
-                  activeCategoryScroll === cat.id 
-                    ? 'text-sargon-gold' 
-                    : 'text-sargon-gray hover:text-sargon-white'
-                }`}
-              >
-                {cat.name[language]}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Menu Items */}
-        <div className="lg:col-span-3 flex flex-col gap-16">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Menu Items */}
+          <div className="flex flex-col gap-20">
           {categoriesWithItems.length === 0 ? (
             <motion.div 
               initial={{ opacity: 0 }}
@@ -255,5 +289,6 @@ export default function Menu() {
         </div>
       </div>
     </div>
+  </div>
   );
 }
