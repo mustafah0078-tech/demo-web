@@ -135,7 +135,7 @@ export default function Home() {
             {[
               { img: 'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?q=80&w=1974&auto=format&fit=crop', title: 'Mixed Grill' },
               { img: 'https://images.unsplash.com/photo-1541518763669-27fef04b14ea?q=80&w=2033&auto=format&fit=crop', title: 'Signature Hummus' },
-              { img: 'https://images.unsplash.com/photo-1577905886361-1279efb50720?q=80&w=2070&auto=format&fit=crop', title: 'Baklava' }
+              { img: 'https://images.unsplash.com/photo-1599785209707-a456fc1337bb?q=80&w=2070&auto=format&fit=crop', title: 'Baklava' }
             ].map((item, i) => (
               <motion.div 
                 key={i}
